@@ -19,13 +19,19 @@ SOMC_PLATFORM := rhine
 DEVICE_PACKAGE_OVERLAYS += \
     device/sony/rhine/overlay
 
+$(call inherit-product-if-exists, vendor/cm/config/common_full.mk)
+
+ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
+SEC := qcom
+endif
+
 PRODUCT_COPY_FILES += \
     $(SONY_ROOT)/fstab.rhine:root/fstab.rhine \
     $(SONY_ROOT)/init.rhine.rc:root/init.rhine.rc \
     $(SONY_ROOT)/init.rhine.usb.rc:root/init.rhine.usb.rc \
     $(SONY_ROOT)/init.rhine.pwr.rc:root/init.rhine.pwr.rc \
     $(SONY_ROOT)/system/etc/init.rhine.bt.sh:system/etc/init.rhine.bt.sh \
-    $(SONY_ROOT)/system/etc/sec_config:system/etc/sec_config \
+    $(SONY_ROOT)/system/etc/sec_config$(SEC):system/etc/sec_config \
     $(SONY_ROOT)/system/etc/gps.conf:system/etc/gps.conf \
     $(SONY_ROOT)/system/etc/nfcee_access.xml:system/etc/nfcee_access.xml \
     $(SONY_ROOT)/system/etc/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
